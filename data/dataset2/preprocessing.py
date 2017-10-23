@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
-from sklearn.model_selection import KFold
+from sklearn.model_selection import StratifiedKFold
 from sklearn.metrics import f1_score
 from sklearn.model_selection import cross_val_predict
 from sklearn.svm import SVC
@@ -23,8 +23,8 @@ def svm(df, label, k, c):
 	clf = SVC(kernel = k, C = c)
 	label = label.astype(np.int)
 	result = []
-	kf = KFold(n_splits = 10, shuffle = True)
-	for train_index, test_index in kf.split(df):
+	kf = StratifiedKFold(n_splits = 10, shuffle = True)
+	for train_index, test_index in kf.split(df, label):
 		x_train, x_test = df[train_index], df[test_index]
 		y_train, y_test = label[train_index], label[test_index]
 		clf.fit(x_train, y_train)
@@ -38,8 +38,8 @@ def rf(df, label, n = 10, m_feature = 'auto', m_dep = None, m_sam_s = 2):
 	# 10 cross validation
 	label = label.astype(np.int)
 	result = []
-	kf = KFold(n_splits = 10, shuffle = True)
-	for train_index, test_index in kf.split(df):
+	kf = StratifiedKFold(n_splits = 10, shuffle = True)
+	for train_index, test_index in kf.split(df, label):
 		x_train, x_test = df[train_index], df[test_index]
 		y_train, y_test = label[train_index], label[test_index]
 		clf.fit(x_train, y_train)
