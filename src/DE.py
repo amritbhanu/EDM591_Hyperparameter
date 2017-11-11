@@ -78,7 +78,21 @@ class DE(object):
         return self.cur_gen[best_index], self.cur_gen
 
     def late_termination(self,fitness,r):
-        pass
+        lives=1
+        while lives!=0:
+            trial_generation = []
+            for ind in self.cur_gen:
+                v = self._extrapolate(ind)
+                #print(v)
+                trial_generation.append(Individual(OrderedDict(v), fitness(v,*r)))
+            current_generation = self._selection(trial_generation)
+            if sorted(self.cur_gen)==sorted(current_generation):
+                lives=lives-1
+            else:
+                self.cur_gen=current_generation
+
+        best_index = self._get_best_index()
+        return self.cur_gen[best_index], self.cur_gen
 
     def _extrapolate(self,ind):
         if (random() < self.CR):
