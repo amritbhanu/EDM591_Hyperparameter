@@ -44,12 +44,12 @@ def run_rfreg(k,train_data,train_labels,test_data,test_labels):
 # C, kernel, degree
 # bounds (0.1,100), ["linear","poly","rbf","sigmoid"], (1,20)
 # "continuous", "categorical", "integer"
-def run_svmclas(train_data=[],train_labels=[],test_data=[],test_labels=[],**k):
+def run_svmclas(k,train_data,train_labels,test_data,test_labels):
     model = SVC(**k).fit(train_data, train_labels)
     prediction = model.predict(test_data)
     return f1_score(test_labels, prediction, average='micro')
 
-def run_svmreg(train_data=[],train_labels=[],test_data=[],test_labels=[],**k):
+def run_svmreg(k,train_data,train_labels,test_data,test_labels):
     model = SVR(**k).fit(train_data, train_labels)
     prediction = model.predict(test_data)
     return mean_squared_error(test_labels, prediction)

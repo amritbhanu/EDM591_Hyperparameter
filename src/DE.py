@@ -13,18 +13,25 @@ __all__ = ['DE']
 Individual = namedtuple('Individual', 'ind fit')
 
 class DE(object):
-    def __init__(self, F=0.3, CR=0.7, NP=10, GEN=3, Goal="Max", termination="Early"):
+    def __init__(self, F=0.3, CR=0.7, NP=10, GEN=2, Goal="Max", termination="Early"):
         self.F=F
         self.CR=CR
         self.NP=NP
-        self.GEN=5
+        self.GEN=GEN
         self.GOAL=Goal
         self.termination=termination
         seed(1)
         np.random.seed(1)
 
     def initial_pop(self):
-        return [{self.para_dic.keys()[i]:self.calls[i](self.bounds[i]) for i in range(self.para_len)} for _ in range(self.NP)]
+        l=[]
+        for _ in range(self.NP):
+            dic=OrderedDict()
+            for i in range(self.para_len):
+                dic[self.para_dic.keys()[i]]=self.calls[i](self.bounds[i])
+            l.append(dic)
+        return l
+        #return [{self.para_dic.keys()[i]:self.calls[i](self.bounds[i]) for i in range(self.para_len)} for _ in range(self.NP)]
 
 
     ## Need a tuple for integer and continuous variable but need the whole list for category
@@ -48,7 +55,7 @@ class DE(object):
         self.randomisation_functions()
         initial_population=self.initial_pop()
 
-        self.cur_gen = [Individual(ind, fitness(ind, *r)) for ind in
+        self.cur_gen = [Individual(OrderedDict(ind), fitness(ind, *r)) for ind in
                               initial_population]
 
         if self.termination=='Early':
@@ -58,16 +65,15 @@ class DE(object):
             return self.late_termination(fitness,*r)
 
     def early_termination(self,fitness,*r):
-        for _ in range(self.GEN):
+        for x in range(self.GEN):
             trial_generation = []
-
             for ind in self.cur_gen:
                 v = self._extrapolate(ind)
-                trial_generation.append(Individual(v, fitness(v,*r)))
+                #print(v)
+                trial_generation.append(Individual(OrderedDict(v), fitness(v,*r)))
 
             current_generation = self._selection(trial_generation)
             self.cur_gen=current_generation
-
         best_index = self._get_best_index()
         return self.cur_gen[best_index], self.cur_gen
 
@@ -83,19 +89,22 @@ class DE(object):
                     mutated.append(l[0][l[0].keys()[x]]+self.F*(l[2][l[2].keys()[x]]-l[2][l[2].keys()[x]]))
                 else:
                     mutated.append(self.calls[x](self.bounds[x]))
-
             check_mutated = []
             for i in range(self.para_len):
                 if self.para_category[i]=='continuous':
-                    check_mutated.append(mutated[i])
-                else:
                     check_mutated.append(max(self.bounds[i][0], min(mutated[i], self.bounds[i][1])))
+                else:
+                    check_mutated.append(mutated[i])
             dic=OrderedDict()
             for i in range(self.para_len):
                 dic[self.para_dic.keys()[i]]=check_mutated[i]
             return dic
         else:
-            return ind.ind
+            dic = OrderedDict()
+            for i in range(self.para_len):
+                key=self.para_dic.keys()[i]
+                dic[self.para_dic.keys()[i]] = ind.ind[key]
+            return dic
 
     def _select3others(self):
         l=[]
