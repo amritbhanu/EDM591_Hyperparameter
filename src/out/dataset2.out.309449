@@ -1,0 +1,44 @@
+[0.80487804878048774, 0.96341463414634143, 0.90243902439024393, 0.91463414634146345, 0.87804878048780488, 0.91463414634146345, 0.98765432098765427, 0.97530864197530864, 0.95000000000000007, 0.97499999999999998] 0.667871952057
+[0.78048780487804881, 0.8902439024390244, 0.8902439024390244, 0.92682926829268297, 0.93902439024390238, 0.96341463414634143, 1.0, 1.0, 0.98750000000000004, 0.96250000000000013] 0.778316020966
+[0.76829268292682928, 0.78048780487804881, 0.79268292682926833, 0.76829268292682928, 0.79268292682926833, 0.75609756097560987, 0.77777777777777779, 0.79012345679012341, 0.8125, 0.77500000000000002] 1.68276596069
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@n2e2-2>
+Subject: Job 309449: </share/tjmenzie/aagrawa8/miniconda2/bin/python2.7 untuned.py _test dataset2> Done
+
+Job </share/tjmenzie/aagrawa8/miniconda2/bin/python2.7 untuned.py _test dataset2> was submitted from host <login04.hpc.ncsu.edu> by user <aagrawa8> in cluster <henry2>.
+Job was executed on host(s) <4*n2e2-2>, in queue <single_chassis>, as user <aagrawa8> in cluster <henry2>.
+                            <4*n2e2-3>
+                            <4*n2e2-7>
+                            <4*n2e2-14>
+</home/aagrawa8> was used as the home directory.
+</home/aagrawa8/EDM591_Hyperparameter/src> was used as the working directory.
+Started at Mon Nov 13 14:31:10 2017
+Results reported at Mon Nov 13 14:31:31 2017
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/share/tjmenzie/aagrawa8/miniconda2/bin/python2.7 untuned.py _test dataset2
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time   :      4.70 sec.
+    Max Memory :         2 MB
+    Max Swap   :        35 MB
+
+    Max Processes  :         1
+    Max Threads    :         1
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <./err/dataset2.err.309449> for stderr output of this job.
+
