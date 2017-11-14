@@ -54,7 +54,7 @@ def _test(res=''):
             for train_index, test_index in skf.split(corpus, labels):
                 train_data, train_labels = corpus[train_index], labels[train_index]
                 test_data, test_labels = corpus[test_index], labels[test_index]
-                de = DE(GEN=5)
+                de = DE(GEN=5, termination="Late")
                 v,pareto=de.solve(learners_class[num],OrderedDict(learners_para_dic[num]),learners_para_bounds[num],learners_para_categories[num],train_data
                          , train_labels,test_data,test_labels)
                 l.append(v.fit)
@@ -78,7 +78,7 @@ def _test(res=''):
                 paras.append(v.ind)
             temp[learners_class[num].__name__] = [l, paras, time.time() - start_time]
             print(l, paras, time.time() - start_time)
-    with open('../dump/'+res+'.pickle', 'wb') as handle:
+    with open('../dump/'+res+'_late.pickle', 'wb') as handle:
         pickle.dump(temp, handle)
 
 if __name__ == '__main__':
