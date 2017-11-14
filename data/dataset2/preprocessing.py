@@ -74,6 +74,8 @@ if __name__ == '__main__':
 	#mergedata()
 	#main()
 	data = np.load('mergedata.npy')
+	#np.savetxt("dataset2.csv", data, delimiter=",")
 	label = np.load('label.npy')
+	#np.savetxt("dataset2_label.csv", label, delimiter=",")
 	#svm(data, label, 'linear', 1)
 	rf(data, label, 10)
