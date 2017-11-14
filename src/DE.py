@@ -77,7 +77,7 @@ class DE(object):
         best_index = self._get_best_index()
         return self.cur_gen[best_index], self.cur_gen
 
-    def late_termination(self,fitness,r):
+    def late_termination(self,fitness,*r):
         lives=1
         while lives!=0:
             trial_generation = []
