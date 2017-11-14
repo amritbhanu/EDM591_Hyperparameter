@@ -1,0 +1,40 @@
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@n2b2-6>
+Subject: Job 312203: </share/tjmenzie/aagrawa8/miniconda2/bin/python2.7 untuned.py _test datatset1> Exited
+
+Job </share/tjmenzie/aagrawa8/miniconda2/bin/python2.7 untuned.py _test datatset1> was submitted from host <login01.hpc.ncsu.edu> by user <aagrawa8> in cluster <henry2>.
+Job was executed on host(s) <8*n2b2-6>, in queue <single_chassis>, as user <aagrawa8> in cluster <henry2>.
+                            <6*n2b2-7>
+                            <2*n2b2-13>
+</home/aagrawa8> was used as the home directory.
+</home/aagrawa8/EDM591_Hyperparameter/src> was used as the working directory.
+Started at Tue Nov 14 09:42:08 2017
+Results reported at Tue Nov 14 09:42:12 2017
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/share/tjmenzie/aagrawa8/miniconda2/bin/python2.7 untuned.py _test datatset1
+------------------------------------------------------------
+
+Exited with exit code 1.
+
+Resource usage summary:
+
+    CPU time   :      1.41 sec.
+    Max Memory :         2 MB
+    Max Swap   :        35 MB
+
+    Max Processes  :         1
+    Max Threads    :         1
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <./err/datatset1.err.312203> for stderr output of this job.
+

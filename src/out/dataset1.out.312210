@@ -1,0 +1,44 @@
+[2.5073081313601127, 2.8778046753114208, 2.1114007488057718, 2.249073388756043, 1.9519644182205971, 2.5445250953232104, 1.8774701277528667, 2.0392573430341852, 2.0488123539763765, 2.808321503299378] [OrderedDict([('max_features', 0.9926179780543045), ('min_samples_split', 12), ('min_impurity_split', 0.12088995980580641), ('max_depth', 5), ('min_samples_leaf', 5)]), OrderedDict([('max_features', 0.42789540982689017), ('min_samples_split', 13), ('min_impurity_split', 0.22169166627303505), ('max_depth', 18), ('min_samples_leaf', 40)]), OrderedDict([('max_features', 0.7140798519983268), ('min_samples_split', 18), ('min_impurity_split', 0.4221069999614152), ('max_depth', 5), ('min_samples_leaf', 26)]), OrderedDict([('max_features', 0.7140798519983268), ('min_samples_split', 18), ('min_impurity_split', 0.4221069999614152), ('max_depth', 5), ('min_samples_leaf', 26)]), OrderedDict([('max_features', 0.9926179780543045), ('min_samples_split', 18), ('min_impurity_split', 0.12088995980580641), ('max_depth', 14), ('min_samples_leaf', 25)]), OrderedDict([('max_features', 0.7140798519983268), ('min_samples_split', 18), ('min_impurity_split', 0.4221069999614152), ('max_depth', 5), ('min_samples_leaf', 26)]), OrderedDict([('max_features', 0.9926179780543045), ('min_samples_split', 18), ('min_impurity_split', 0.12088995980580641), ('max_depth', 14), ('min_samples_leaf', 25)]), OrderedDict([('max_features', 0.7140798519983268), ('min_samples_split', 18), ('min_impurity_split', 0.4221069999614152), ('max_depth', 5), ('min_samples_leaf', 26)]), OrderedDict([('max_features', 0.9926179780543045), ('min_samples_split', 16), ('min_impurity_split', 0.12088995980580641), ('max_depth', 9), ('min_samples_leaf', 13)]), OrderedDict([('max_features', 0.9926179780543045), ('min_samples_split', 7), ('min_impurity_split', 0.12088995980580641), ('max_depth', 18), ('min_samples_leaf', 31)])] 1.21482300758
+[1.8604580140921438, 2.1525391005429273, 2.1745509978954538, 2.84306787752559, 1.7295818381435231, 1.7415899242035431, 3.108376081798899, 2.3074172077917856, 1.7677288246322409, 3.2218255972149672] [OrderedDict([('max_features', 0.6550770429955354), ('min_samples_split', 16), ('max_leaf_nodes', 28), ('min_samples_leaf', 18), ('min_impurity_split', 0.8357651039198697), ('n_estimators', 61)]), OrderedDict([('max_features', 0.8317353363415838), ('min_samples_split', 14), ('max_leaf_nodes', 16), ('min_samples_leaf', 12), ('min_impurity_split', 0.8824790008318577), ('n_estimators', 93)]), OrderedDict([('max_features', 0.8317353363415838), ('min_samples_split', 18), ('max_leaf_nodes', 8), ('min_samples_leaf', 12), ('min_impurity_split', 0.8824790008318577), ('n_estimators', 55)]), OrderedDict([('max_features', 0.7646572816333626), ('min_samples_split', 7), ('max_leaf_nodes', 45), ('min_samples_leaf', 12), ('min_impurity_split', 0.22876222127045265), ('n_estimators', 97)]), OrderedDict([('max_features', 0.8392021959059471), ('min_samples_split', 12), ('max_leaf_nodes', 17), ('min_samples_leaf', 5), ('min_impurity_split', 0.9925434121760651), ('n_estimators', 54)]), OrderedDict([('max_features', 0.8317353363415838), ('min_samples_split', 18), ('max_leaf_nodes', 8), ('min_samples_leaf', 12), ('min_impurity_split', 0.8824790008318577), ('n_estimators', 55)]), OrderedDict([('max_features', 0.8392021959059471), ('min_samples_split', 4), ('max_leaf_nodes', 46), ('min_samples_leaf', 1), ('min_impurity_split', 0.9925434121760651), ('n_estimators', 66)]), OrderedDict([('max_features', 0.8392021959059471), ('min_samples_split', 20), ('max_leaf_nodes', 16), ('min_samples_leaf', 12), ('min_impurity_split', 0.9925434121760651), ('n_estimators', 72)]), OrderedDict([('max_features', 0.8317353363415838), ('min_samples_split', 7), ('max_leaf_nodes', 18), ('min_samples_leaf', 11), ('min_impurity_split', 0.8824790008318577), ('n_estimators', 79)]), OrderedDict([('max_features', 0.8392021959059471), ('min_samples_split', 12), ('max_leaf_nodes', 17), ('min_samples_leaf', 5), ('min_impurity_split', 0.9925434121760651), ('n_estimators', 54)])] 168.686306953
+[3.0774668222324055, 2.5577441101982363, 2.6994019406412098, 2.4325324715662742, 2.5744035020206559, 2.0015392572337967, 4.2166511277658891, 2.8434624941840685, 4.0737670931960057, 2.4232492397055152] [OrderedDict([('C', 65.19413797500401), ('kernel', 'linear'), ('degree', 1)]), OrderedDict([('C', 2.9319129045484305), ('kernel', 'linear'), ('degree', 15)]), OrderedDict([('C', 72.18184923084418), ('kernel', 'linear'), ('degree', 6)]), OrderedDict([('C', 72.18184923084418), ('kernel', 'linear'), ('degree', 6)]), OrderedDict([('C', 21.738279773348278), ('kernel', 'rbf'), ('degree', 9)]), OrderedDict([('C', 21.738279773348278), ('kernel', 'poly'), ('degree', 1)]), OrderedDict([('C', 65.19413797500401), ('kernel', 'poly'), ('degree', 1)]), OrderedDict([('C', 65.19413797500401), ('kernel', 'linear'), ('degree', 1)]), OrderedDict([('C', 76.2517802375484), ('kernel', 'linear'), ('degree', 9)]), OrderedDict([('C', 65.19413797500401), ('kernel', 'linear'), ('degree', 1)])] 1483.97396517
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@n2a1-3>
+Subject: Job 312210: </share/tjmenzie/aagrawa8/miniconda2/bin/python2.7 main.py _test dataset1> Done
+
+Job </share/tjmenzie/aagrawa8/miniconda2/bin/python2.7 main.py _test dataset1> was submitted from host <login01.hpc.ncsu.edu> by user <aagrawa8> in cluster <henry2>.
+Job was executed on host(s) <4*n2a1-3>, in queue <single_chassis>, as user <aagrawa8> in cluster <henry2>.
+                            <4*n2a1-8>
+                            <4*n2a1-1>
+                            <4*n2a1-6>
+</home/aagrawa8> was used as the home directory.
+</home/aagrawa8/EDM591_Hyperparameter/src> was used as the working directory.
+Started at Tue Nov 14 09:43:51 2017
+Results reported at Tue Nov 14 10:11:26 2017
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/share/tjmenzie/aagrawa8/miniconda2/bin/python2.7 main.py _test dataset1
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time   :   1656.59 sec.
+    Max Memory :        77 MB
+    Max Swap   :       648 MB
+
+    Max Processes  :         3
+    Max Threads    :         4
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <./err/dataset1.err.312210> for stderr output of this job.
+

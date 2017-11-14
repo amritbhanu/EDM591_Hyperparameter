@@ -1,0 +1,45 @@
+[6.6698564593301439, 6.0143540669856463, 5.7703349282296648, 3.6842105263157894, 3.1339712918660285, 4.6985645933014357, 3.4401913875598087, 5.9425837320574164, 4.2834928229665072, 4.3971291866028706] 0.0826659202576
+[2.8424076555023925, 2.6737799043062203, 2.0235778841042, 2.6435413343965974, 3.8427272727272732, 2.1351342371079212, 1.9683253588516743, 2.2345933014354071, 2.9070069112174375, 2.9609569377990437] 0.772551059723
+[4.9796912418985464, 5.040316096160268, 4.1997580143107189, 5.2730962106839652, 5.858258415973375, 4.4053618948634936, 6.2538197405923537, 4.6131800880953442, 3.6467733581647797, 6.8372852591983158] 1.00013279915
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@n2e2-9>
+Subject: Job 312209: </share/tjmenzie/aagrawa8/miniconda2/bin/python2.7 untuned.py _test dataset1> Done
+
+Job </share/tjmenzie/aagrawa8/miniconda2/bin/python2.7 untuned.py _test dataset1> was submitted from host <login01.hpc.ncsu.edu> by user <aagrawa8> in cluster <henry2>.
+Job was executed on host(s) <2*n2e2-9>, in queue <single_chassis>, as user <aagrawa8> in cluster <henry2>.
+                            <2*n2e2-10>
+                            <4*n2e2-7>
+                            <4*n2e2-13>
+                            <4*n2e2-3>
+</home/aagrawa8> was used as the home directory.
+</home/aagrawa8/EDM591_Hyperparameter/src> was used as the working directory.
+Started at Tue Nov 14 09:43:40 2017
+Results reported at Tue Nov 14 09:43:47 2017
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/share/tjmenzie/aagrawa8/miniconda2/bin/python2.7 untuned.py _test dataset1
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time   :      3.32 sec.
+    Max Memory :         2 MB
+    Max Swap   :        35 MB
+
+    Max Processes  :         1
+    Max Threads    :         1
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <./err/dataset1.err.312209> for stderr output of this job.
+

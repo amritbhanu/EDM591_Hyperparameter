@@ -1,0 +1,44 @@
+[0.57999999999999996, 0.7142857142857143, 0.4375, 0.72916666666666652, 0.60416666666666663, 0.58333333333333337, 0.72916666666666652, 0.51063829787234039, 0.74468085106382975, 0.7021276595744681] 0.0305209159851
+[0.66000000000000003, 0.69387755102040816, 0.60416666666666663, 0.70833333333333337, 0.5625, 0.64583333333333337, 0.60416666666666663, 0.55319148936170215, 0.65957446808510634, 0.78723404255319152] 0.379297971725
+[0.76000000000000001, 0.67346938775510201, 0.58333333333333337, 0.77083333333333326, 0.625, 0.66666666666666663, 0.6875, 0.68085106382978722, 0.72340425531914898, 0.63829787234042556] 0.120656013489
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@n2a1-3>
+Subject: Job 312205: </share/tjmenzie/aagrawa8/miniconda2/bin/python2.7 untuned.py _test dataset3> Done
+
+Job </share/tjmenzie/aagrawa8/miniconda2/bin/python2.7 untuned.py _test dataset3> was submitted from host <login01.hpc.ncsu.edu> by user <aagrawa8> in cluster <henry2>.
+Job was executed on host(s) <4*n2a1-3>, in queue <single_chassis>, as user <aagrawa8> in cluster <henry2>.
+                            <4*n2a1-8>
+                            <4*n2a1-1>
+                            <4*n2a1-9>
+</home/aagrawa8> was used as the home directory.
+</home/aagrawa8/EDM591_Hyperparameter/src> was used as the working directory.
+Started at Tue Nov 14 09:42:08 2017
+Results reported at Tue Nov 14 09:42:13 2017
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/share/tjmenzie/aagrawa8/miniconda2/bin/python2.7 untuned.py _test dataset3
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time   :      1.68 sec.
+    Max Memory :         2 MB
+    Max Swap   :        35 MB
+
+    Max Processes  :         1
+    Max Threads    :         1
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <./err/dataset3.err.312205> for stderr output of this job.
+
