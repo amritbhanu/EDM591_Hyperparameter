@@ -34,19 +34,21 @@ def _test(res=''):
     for num,i in enumerate(learners_class):
         start_time = time.time()
         if class_flag:
-            skf = StratifiedKFold(n_splits=10)
-            l=[]
-            for train_index, test_index in skf.split(corpus, labels):
-                train_data, train_labels = corpus[train_index], labels[train_index]
-                test_data, test_labels = corpus[test_index], labels[test_index]
-                v=learners_class[num](OrderedDict(learners_para_dic[num]),train_data
-                         , train_labels,test_data,test_labels)
-                l.append(v)
+            l = []
+            for _ in range(10):
+                shuffle(ranges)
+                corpus,labels=corpus[ranges],labels[ranges]
+                skf = StratifiedKFold(n_splits=10)
+                for train_index, test_index in skf.split(corpus, labels):
+                    train_data, train_labels = corpus[train_index], labels[train_index]
+                    test_data, test_labels = corpus[test_index], labels[test_index]
+                    v=learners_class[num](OrderedDict(learners_para_dic[num]),train_data
+                             , train_labels,test_data,test_labels)
+                    l.append(v)
             temp[learners_class[num].__name__] = [l, time.time() - start_time]
-            print(l, time.time() - start_time)
         else:
             l=[]
-            for k in range(10):
+            for k in range(100):
                 shuffle(ranges)
                 train_data, train_labels, test_data , test_labels = corpus[ranges[:int(0.8*len(ranges))]]\
                     , labels[ranges[:int(0.8 * len(ranges))]]\
@@ -55,7 +57,6 @@ def _test(res=''):
                                         , train_labels, test_data, test_labels)
                 l.append(v)
             temp[learners_reg[num].__name__]=[l,time.time()-start_time]
-            print(l,time.time()-start_time)
     with open('../dump/'+res+'_untuned.pickle', 'wb') as handle:
         pickle.dump(temp, handle)
 

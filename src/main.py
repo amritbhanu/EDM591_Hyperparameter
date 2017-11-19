@@ -70,7 +70,7 @@ def late(corpus,labels,ranges,class_flag,res):
                     l.append(v.fit)
                     paras.append(v.ind)
             temp[learners_reg[num].__name__] = [l, paras, time.time() - start_time]
-    with open('../dump/' + res + '.pickle', 'wb') as handle:
+    with open('../dump/' + res + '_late.pickle', 'wb') as handle:
         pickle.dump(temp, handle)
 
 def early(corpus,labels,ranges,class_flag,res):
