@@ -37,53 +37,53 @@ def late(corpus,labels,ranges,class_flag,res):
     temp = {}
     for num, i in enumerate(learners_class):
         start_time = time.time()
+        l = []
+        paras = []
         if class_flag:
-            skf = StratifiedKFold(n_splits=10)
-            l = []
-            paras = []
-            for train_index, test_index in skf.split(corpus, labels):
-                train_data, train_labels = corpus[train_index], labels[train_index]
-                test_data, test_labels = corpus[test_index], labels[test_index]
-                de = DE(GEN=5, termination="Late")
-                v, pareto = de.solve(learners_class[num], OrderedDict(learners_para_dic[num]),
-                                     learners_para_bounds[num], learners_para_categories[num], train_data
-                                     , train_labels, test_data, test_labels)
-                l.append(v.fit)
-                paras.append(v.ind)
-            temp[learners_class[num].__name__] = [l, paras, time.time() - start_time]
-            print(l, paras, time.time() - start_time)
-        else:
-            l = []
-            paras = []
-            for k in range(10):
+            for _ in range(10):
                 shuffle(ranges)
-                train_data, train_labels, test_data, test_labels = corpus[ranges[:int(0.8 * len(ranges))]] \
-                    , labels[ranges[:int(0.8 * len(ranges))]] \
-                    , corpus[ranges[int(0.8 * len(ranges)):]], labels[ranges[int(0.8 * len(ranges)):]]
-                de = DE(Goal="Min", GEN=5,termination="Late")
+                corpus,labels=corpus[ranges],labels[ranges]
+                skf = StratifiedKFold(n_splits=10)
+                for train_index, test_index in skf.split(corpus, labels):
+                    train_data, train_labels = corpus[train_index], labels[train_index]
+                    test_data, test_labels = corpus[test_index], labels[test_index]
+                    de = DE(termination="Late")
+                    v, pareto = de.solve(learners_class[num], OrderedDict(learners_para_dic[num]),
+                                         learners_para_bounds[num], learners_para_categories[num], train_data
+                                         , train_labels, test_data, test_labels)
+                    l.append(v.fit)
+                    paras.append(v.ind)
+            temp[learners_class[num].__name__] = [l, paras, time.time() - start_time]
+        else:
+            for _ in range(10):
+                for k in range(10):
+                    shuffle(ranges)
+                    train_data, train_labels, test_data, test_labels = corpus[ranges[:int(0.8 * len(ranges))]] \
+                        , labels[ranges[:int(0.8 * len(ranges))]] \
+                        , corpus[ranges[int(0.8 * len(ranges)):]], labels[ranges[int(0.8 * len(ranges)):]]
+                    de = DE(Goal="Min", termination="Late")
 
-                v, pareto = de.solve(learners_reg[num], OrderedDict(learners_para_dic[num]), learners_para_bounds[num],
-                                     learners_para_categories[num],
-                                     train_data
-                                     , train_labels, test_data, test_labels)
-                l.append(v.fit)
-                paras.append(v.ind)
+                    v, pareto = de.solve(learners_reg[num], OrderedDict(learners_para_dic[num]), learners_para_bounds[num],
+                                         learners_para_categories[num],
+                                         train_data
+                                         , train_labels, test_data, test_labels)
+                    l.append(v.fit)
+                    paras.append(v.ind)
             temp[learners_reg[num].__name__] = [l, paras, time.time() - start_time]
-            print(l, paras, time.time() - start_time)
-    with open('../dump/' + res + '_late.pickle', 'wb') as handle:
+    with open('../dump/' + res + '.pickle', 'wb') as handle:
         pickle.dump(temp, handle)
 
 def early(corpus,labels,ranges,class_flag,res):
     temp = {}
     for num, i in enumerate(learners_class):
         start_time = time.time()
-        for _ in range(10):
-            shuffle(ranges)
-            corpus,labels=corpus[ranges],labels[ranges]
-            if class_flag:
+        l = []
+        paras = []
+        if class_flag:
+            for _ in range(10):
+                shuffle(ranges)
+                corpus,labels=corpus[ranges],labels[ranges]
                 skf = StratifiedKFold(n_splits=10)
-                l = []
-                paras = []
                 for train_index, test_index in skf.split(corpus, labels):
                     train_data, train_labels = corpus[train_index], labels[train_index]
                     test_data, test_labels = corpus[test_index], labels[test_index]
@@ -95,8 +95,6 @@ def early(corpus,labels,ranges,class_flag,res):
                     paras.append(v.ind)
             temp[learners_class[num].__name__] = [l, paras, time.time() - start_time]
         else:
-            l = []
-            paras = []
             for _ in range(10):
                 for k in range(10):
                     shuffle(ranges)
