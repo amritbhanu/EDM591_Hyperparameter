@@ -12,11 +12,11 @@ def mergedata():
 	list_ = []
 	frame = pd.DataFrame
 	for i in range(11):
-		filename = 'setapProcessT'+str(i+1)+'.csv'
+		filename = '../data/dataset2/setapProcessT'+str(i+1)+'.csv'
 		data = pd.read_csv(filename, header = 63)
 		list_.append(data)
 	frame = pd.concat(list_)
-	frame.to_csv('mergedata.csv')
+	frame.to_csv('../data/dataset2/mergedata.csv')
 
 def svm(df, label, k, c):
 	#k = kernel, c = C
@@ -50,7 +50,7 @@ def rf(df, label, n = 10, m_feature = 'auto', m_dep = None, m_sam_s = 2):
 
 def main():
 	#df = np.load('mergedata.npy')
-	df = pd.read_csv('mergedata.csv')
+	df = pd.read_csv('../data/dataset2/mergedata.csv')
 	df.drop(df.columns[:6], inplace = True, axis = 1)
 	df.drop(['globalLeadAdminHoursTotal','globalLeadAdminHoursAverage','globalLeadAdminHoursStandardDeviation','averageGlobalLeadAdminHoursTotalByWeek','standardDeviationGlobalLeadAdminHoursTotalByWeek','averageGlobalLeadAdminHoursAverageByWeek','standardDeviationGlobalLeadAdminHoursAverageByWeek'], inplace = True, axis = 1)
 	df = df[pd.notnull(df['processLetterGrade'])]
@@ -65,17 +65,17 @@ def main():
 	#fill missing value
 	#df.fillna(df.mean(),inplace=True)
 	print(df.head())
-	np.save('mergedata',df)
+	np.save('../data/dataset2/mergedata',df)
 	#df.to_csv('merge.csv')
 
-	np.save('label',label)
+	np.save('../data/dataset2/label',label)
 
 if __name__ == '__main__':
 	#mergedata()
 	#main()
-	data = np.load('mergedata.npy')
+	data = np.load('../data/dataset2/mergedata.npy')
 	#np.savetxt("dataset2.csv", data, delimiter=",")
-	label = np.load('label.npy')
+	label = np.load('../data/dataset2/label.npy')
 	#np.savetxt("dataset2_label.csv", label, delimiter=",")
 	#svm(data, label, 'linear', 1)
 	rf(data, label, 10)
