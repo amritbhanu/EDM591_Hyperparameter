@@ -85,9 +85,9 @@ def fetch_num_value(val, l_map,last_counts,i,avg_val_per_column):
     return l_map[val]
 
 
-(f,p) =preprocess(['student-mat.csv','student-por.csv'],[0,1,3,4,5,8,9,10,11,15,16,17,18,19,20,21,22],0)
+(f,p) =preprocess(['../data/raw/student-mat.csv','../data/raw/student-por.csv'],[0,1,3,4,5,8,9,10,11,15,16,17,18,19,20,21,22],0)
 #(f,p) =preprocess(['student-mat.csv'],[0,1,3,4,5,8,9,10,11,15,16,17,18,19,20,21,22],0)
-(f1,p1) =preprocess(['xAPI-Edu-Data.csv'],[0,1,2,3,4,5,6,7,8,13,14,15,16],1)
+(f1,p1) =preprocess(['../data/raw/xAPI-Edu-Data.csv'],[0,1,2,3,4,5,6,7,8,13,14,15,16],1)
 
 # ../data/dataset2/mergedata.csv    
 myFile = open('../data/dataset1.csv', 'wb')  
