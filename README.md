@@ -22,15 +22,15 @@ Github Repository can be found here: https://github.com/amritbhanu/EDM591_Hyperp
 
 ## How to run scripts:
 Go into src folder and run in the sequential order, how we mentioned below.
-- 'python preprocessing_dataset2.py'
-- 'python Preprocess_dataset1_3.py'
-- 'python untuned.py _test dataset1' : this will generate dataset1_untuned.pickle in dump folder
-- 'python untuned.py _test dataset2' : this will generate dataset2_untuned.pickle in dump folder
-- 'python untuned.py _test dataset3' : this will generate dataset3_untuned.pickle in dump folder
-- Now to run these scripts you will need High Performance computing (HPC) servers since it will 4-8 hours to end 1 script.
+1) 'python preprocessing_dataset2.py'
+2) 'python Preprocess_dataset1_3.py'
+3) 'python untuned.py _test dataset1' : this will generate dataset1_untuned.pickle in dump folder
+4) 'python untuned.py _test dataset2' : this will generate dataset2_untuned.pickle in dump folder
+5) 'python untuned.py _test dataset3' : this will generate dataset3_untuned.pickle in dump folder
+6) Now to run these scripts you will need High Performance computing (HPC) servers since it will 4-8 hours to end each script. If it cant be run, we have provided the dump of our results. Directly jump to step 7.
     - 'python main.py _test dataset1' : this will generate dataset1.pickle and dataset1_late.pickle in dump folder
     - 'python main.py _test dataset2' : this will generate dataset2.pickle and dataset2_late.pickle in dump folder
     - 'python main.py _test dataset3' : this will generate dataset3.pickle and dataset3_late.pickle in dump folder
-- 'python read_pickle.py' : will generate graphs in results folder.
+7) 'python read_pickle.py' : will generate graphs in results folder.
 
 
