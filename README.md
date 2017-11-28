@@ -4,7 +4,7 @@
 - Github Repository can be found here: https://github.com/amritbhanu/EDM591_Hyperparameter
 
 ## Installation:
-- Run pip install on requirements.txt to get the required packages.
+- Run 'pip install -r requirements.txt' to get the required python packages.
 - Need python2.7 
 
 ## Directory Structure:
