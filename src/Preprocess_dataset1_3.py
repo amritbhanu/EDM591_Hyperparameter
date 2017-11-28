@@ -90,12 +90,12 @@ def fetch_num_value(val, l_map,last_counts,i,avg_val_per_column):
 (f1,p1) =preprocess(['../data/raw/xAPI-Edu-Data.csv'],[0,1,2,3,4,5,6,7,8,13,14,15,16],1)
 
 # ../data/dataset2/mergedata.csv    
-myFile = open('../data/dataset1.csv', 'wb')  
+myFile = open('../data/dataset1.csv', 'wb')
 with myFile:  
    writer = csv.writer(myFile)
    writer.writerows(f)     
             
-myFile = open('../data/dataset3.csv', 'wb')  
+myFile = open('../data/dataset3.csv', 'wb')
 with myFile:  
    writer = csv.writer(myFile)
    writer.writerows(f1)            

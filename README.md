@@ -1,6 +1,6 @@
 ## EDM591_Hyperparameter
-- Final PPT can be find here: https://tiny.cc/edm17ppt
-- Final Report can be find here: https://tiny.cc/edm17report
+- Final PPT can be found here: https://tiny.cc/edm17ppt
+- Final Report can be found here: https://tiny.cc/edm17report
 - Github Repository can be found here: https://github.com/amritbhanu/EDM591_Hyperparameter
 
 ## Installation:
@@ -9,8 +9,8 @@
 
 ## Directory Structure:
 - Data folder contains raw data as well as preprocessed data. You will need raw folder and datset2 folder inside. dataset1, dataset2, dataset3 csvs will automatically be generated.
-- Dump folder contains the results dump of running our scripts. So that results can be generated quickly.
-- Results folder contain all our graphs and results for the report and ppt. They will be automatically be generated our running our scripts.
+- Dump folder contains the results dump from running our scripts. So that results can be generated quickly.
+- Results folder contain all our graphs and results for the report and ppt. They will automatically be generated our running our scripts.
 - Src directory contains all our scripts.
 
 ## Src scripts:
