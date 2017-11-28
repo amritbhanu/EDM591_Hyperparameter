@@ -3,6 +3,10 @@
 - Final Report can be find here: https://tiny.cc/edm17report
 - Github Repository can be found here: https://github.com/amritbhanu/EDM591_Hyperparameter
 
+## Installation:
+- Run pip install on requirements.txt to get the required packages.
+- Need python2.7 
+
 ## Directory Structure:
 - Data folder contains raw data as well as preprocessed data. You will need raw folder and datset2 folder inside. dataset1, dataset2, dataset3 csvs will automatically be generated.
 - Dump folder contains the results dump of running our scripts. So that results can be generated quickly.
