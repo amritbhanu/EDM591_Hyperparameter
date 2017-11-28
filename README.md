@@ -1,7 +1,7 @@
 ## EDM591_Hyperparameter
-Final PPT can be find here: https://tiny.cc/edm17ppt
-Final Report can be find here: https://tiny.cc/edm17report
-Github Repository can be found here: https://github.com/amritbhanu/EDM591_Hyperparameter
+- Final PPT can be find here: https://tiny.cc/edm17ppt
+- Final Report can be find here: https://tiny.cc/edm17report
+- Github Repository can be found here: https://github.com/amritbhanu/EDM591_Hyperparameter
 
 ## Directory Structure:
 - Data folder contains raw data as well as preprocessed data. You will need raw folder and datset2 folder inside. dataset1, dataset2, dataset3 csvs will automatically be generated.
