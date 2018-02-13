@@ -10,7 +10,7 @@ from random import random, randint, uniform, seed, choice, sample
 import numpy as np
 
 __all__ = ['DE']
-Individual = namedtuple('Individual', 'ind fit')
+Individual = namedtuple('Individual', 'ind fit other')
 
 class DE(object):
     def __init__(self, F=0.3, CR=0.7, NP=10, GEN=2, Goal="Max", termination="Early"):
