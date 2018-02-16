@@ -95,14 +95,14 @@ def main(filename, drop_columns=[], label='', missing_methods='0', norm_methods=
 	
 	data = nomalization(df = data, methods = norm_methods)
 
-	data = categorical_to_numerical(df = data)
+	#data = categorical_to_numerical(df = data)
 
 	#data = pd.con([data,label_column])
 	data = pd.concat([data, label_column], axis=1, join_axes=[data.index])
 
 	data = categorical_to_numerical_ii(df = data)
 	
-	data.to_csv("../data/preprocessed_data/"+filename+missing_methods+norm_methods+'.csv',index=False)
+	data.to_csv("../data/preprocessed_data/"+filename+missing_methods+norm_methods+'categorize_ii'+'.csv',index=False)
 
 	'''
 	
@@ -114,8 +114,8 @@ if __name__ == '__main__':
 	miss1 = ['0','median']
 	norm2 = ['min-max','mean']
 	#for k,v in d.items():
-	k = 'dataset3'
-	v = 'Class'
+	k = 'dataset1_portuguese'
+	v = 'G3'
 	for m in miss1:
 		for n in norm2:
 			main(filename = k, label = v, missing_methods = m, norm_methods = n)
