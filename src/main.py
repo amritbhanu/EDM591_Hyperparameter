@@ -43,8 +43,7 @@ def late(corpus,labels,ranges,class_flag,res,metric,columns):
             temp[i.__name__] = {}
             temp['cols']=columns
             for m in metrics:
-                if m not in temp[i.__name__]:
-                    temp[i.__name__][m] = []
+                temp[i.__name__][m] = []
             for _ in range(5):
                 shuffle(ranges)
                 corpus,labels=corpus[ranges],labels[ranges]
@@ -60,9 +59,9 @@ def late(corpus,labels,ranges,class_flag,res,metric,columns):
 
                     start_time = time.time()
                     if metric=='false_alarm':
-                        de = DE(Goal="Min",termination="Late")
+                        de = DE(Goal="Min",termination="Late", NP=30)
                     else:
-                        de = DE(termination="Late")
+                        de = DE(termination="Late",NP=30)
                     v, _ = de.solve(learners_class[num], OrderedDict(learners_para_dic[num]),
                                          learners_para_bounds[num], learners_para_categories[num], training_data
                                          , training_labels, vali_data, vali_labels, metric)
@@ -78,8 +77,7 @@ def late(corpus,labels,ranges,class_flag,res,metric,columns):
             temp[i.__name__] = {}
             temp['cols'] = columns
             for m in metrics[-2:]+['MSE']:
-                if m not in temp[i.__name__]:
-                    temp[i.__name__][m] = []
+                temp[i.__name__][m] = []
             for _ in range(5):
                 for k in range(5):
                     shuffle(ranges)
@@ -93,7 +91,7 @@ def late(corpus,labels,ranges,class_flag,res,metric,columns):
                         , train_data[ran[int(0.8 * len(ran)):]], train_labels[ran[int(0.8 * len(ran)):]]
 
                     start_time = time.time()
-                    de = DE(Goal="Min", termination="Late")
+                    de = DE(Goal="Min", termination="Late",NP=30)
                     v, _ = de.solve(learners_reg[num], OrderedDict(learners_para_dic[num]),
                                          learners_para_bounds[num], learners_para_categories[num], training_data
                                          , training_labels, vali_data, vali_labels)
@@ -112,8 +110,7 @@ def early(corpus,labels,ranges,class_flag,res,metric,columns):
             temp[i.__name__] = {}
             temp['cols']=columns
             for m in metrics:
-                if m not in temp[i.__name__]:
-                    temp[i.__name__][m] = []
+                temp[i.__name__][m] = []
             for _ in range(5):
                 shuffle(ranges)
                 corpus,labels=corpus[ranges],labels[ranges]
@@ -129,9 +126,9 @@ def early(corpus,labels,ranges,class_flag,res,metric,columns):
 
                     start_time = time.time()
                     if metric=='false_alarm':
-                        de = DE(Goal="Min",GEN=5)
+                        de = DE(Goal="Min",GEN=5,NP=30)
                     else:
-                        de = DE(GEN=5)
+                        de = DE(GEN=5,NP=30)
                     v, _ = de.solve(learners_class[num], OrderedDict(learners_para_dic[num]),
                                          learners_para_bounds[num], learners_para_categories[num], training_data
                                          , training_labels, vali_data, vali_labels,metric)
@@ -147,8 +144,7 @@ def early(corpus,labels,ranges,class_flag,res,metric,columns):
             temp[i.__name__] = {}
             temp['cols'] = columns
             for m in metrics[-2:] + ['MSE']:
-                if m not in temp[i.__name__]:
-                    temp[i.__name__][m] = []
+                temp[i.__name__][m] = []
             for _ in range(5):
                 for k in range(5):
                     shuffle(ranges)
@@ -162,7 +158,7 @@ def early(corpus,labels,ranges,class_flag,res,metric,columns):
                         , train_data[ran[int(0.8 * len(ran)):]], train_labels[ran[int(0.8 * len(ran)):]]
 
                     start_time = time.time()
-                    de = DE(Goal="Min", GEN=5)
+                    de = DE(Goal="Min", GEN=5,NP=30)
                     v, _ = de.solve(learners_reg[num], OrderedDict(learners_para_dic[num]),
                                          learners_para_bounds[num], learners_para_categories[num], training_data
                                          , training_labels, vali_data, vali_labels)
@@ -175,7 +171,8 @@ def early(corpus,labels,ranges,class_flag,res,metric,columns):
     with open('../dump/' +metric+res+ '_early.pickle', 'wb') as handle:
         pickle.dump(temp, handle)
 
-def _test(res='',metric=''):
+def _test(res=''):
+
     seed(1)
     np.random.seed(1)
     file_names=[]
@@ -185,14 +182,23 @@ def _test(res='',metric=''):
                 file_names.append(file.split(".csv")[0])
     if res=='dataset1_math' or res=='dataset1_portuguese':
         class_flag=False
+        for f in file_names:
+            df = pd.read_csv("../data/preprocessed_data/" + f + ".csv")
+            corpus, labels = np.array(df[df.columns[:-1]].values.tolist()), np.array(df[df.columns[-1]].values.tolist())
+            ranges = range(0, len(labels))
+            early(corpus, labels, ranges, class_flag, f, '', df.columns[:-1].values.tolist())
+            late(corpus, labels, ranges, class_flag, f, '', df.columns[:-1].values.tolist())
     else:
         class_flag=True
-    for f in file_names[:1]:
-        df = pd.read_csv("../data/preprocessed_data/" + f + ".csv")
-        corpus, labels = np.array(df[df.columns[:-1]].values.tolist()), np.array(df[df.columns[-1]].values.tolist())
-        ranges = range(0, len(labels))
-        early(corpus,labels,ranges,class_flag,f,metric,df.columns[:-1].values.tolist())
-        late(corpus,labels,ranges,class_flag,f,metric,df.columns[:-1].values.tolist())
+        for metric in metrics:
+            for f in file_names:
+                df = pd.read_csv("../data/preprocessed_data/" + f + ".csv")
+                corpus, labels = np.array(df[df.columns[:-1]].values.tolist()), np.array(df[df.columns[-1]].values.tolist())
+                ranges = range(0, len(labels))
+                early(corpus, labels, ranges, class_flag, f, metric, df.columns[:-1].values.tolist())
+                late(corpus, labels, ranges, class_flag, f, metric, df.columns[:-1].values.tolist())
+
+
 
 if __name__ == '__main__':
     eval(cmd ())

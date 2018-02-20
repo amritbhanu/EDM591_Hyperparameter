@@ -10,7 +10,7 @@ from random import random, randint, uniform, seed, choice, sample
 import numpy as np
 
 __all__ = ['DE']
-Individual = namedtuple('Individual', 'ind fit other')
+Individual = namedtuple('Individual', 'ind fit')
 
 class DE(object):
     def __init__(self, F=0.3, CR=0.7, NP=10, GEN=2, Goal="Max", termination="Early"):
@@ -58,7 +58,7 @@ class DE(object):
         self.cur_gen = []
         for ind in initial_population:
             val = fitness(ind, *r)
-            self.cur_gen.append(Individual(OrderedDict(ind), val[0], val[1]))
+            self.cur_gen.append(Individual(OrderedDict(ind), val[0]))
 
         if self.termination=='Early':
             return self.early_termination(fitness,*r)
@@ -72,7 +72,7 @@ class DE(object):
             for ind in self.cur_gen:
                 v = self._extrapolate(ind)
                 temp=fitness(v,*r)
-                trial_generation.append(Individual(OrderedDict(v),temp[0],temp[1] ))
+                trial_generation.append(Individual(OrderedDict(v),temp[0] ))
 
             current_generation = self._selection(trial_generation)
             self.cur_gen=current_generation
@@ -86,7 +86,7 @@ class DE(object):
             for ind in self.cur_gen:
                 v = self._extrapolate(ind)
                 temp = fitness(v, *r)
-                trial_generation.append(Individual(OrderedDict(v), temp[0], temp[1]))
+                trial_generation.append(Individual(OrderedDict(v), temp[0]))
             current_generation = self._selection(trial_generation)
             if sorted(self.cur_gen)==sorted(current_generation):
                 lives=lives-1
