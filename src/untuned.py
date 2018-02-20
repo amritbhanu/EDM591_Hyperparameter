@@ -22,7 +22,7 @@ learners_para_dic=[OrderedDict(), OrderedDict(), OrderedDict()]
 metrics=['accuracy','recall','precision','false_alarm','times','features']
 
 ROOT=os.getcwd()
-metric='auc'
+metric='recall'
 
 def _test(res=''):
     seed(1)
