@@ -72,7 +72,7 @@ def writecsvs_class(file,file_names,untuned):
             writer.writerow(cols)
             writer.writerows(l1)
 
-def values(file,file_names,untuned):
+def values_class(file,file_names,untuned):
     dic={}
     for m in metrics:
         dic[m]={}
@@ -86,9 +86,23 @@ def values(file,file_names,untuned):
                 if l!='cols':
                     dic[m][preprocess_names[res]].append([learners_class[l]]+values[m])
     return dic
-    ## file contains the main dateset name
 
-def draw(dic):
+def values_reg(file, file_names, untuned):
+        dic = {}
+        for m in ['MSE']:
+            dic[m] = {}
+            for f in file_names:
+                with open("../dump/new/" + f, 'rb') as handle:
+                    a = pickle.load(handle)
+                res = f.split(file)[1]
+                res = res.split(untuned)[0]
+                dic[m][preprocess_names[res]] = []
+                for l, values in a.iteritems():
+                    if l != 'cols':
+                        dic[m][preprocess_names[res]].append([learners_class[l]] + values[m])
+        return dic
+
+def draw_class(dic):
     font = {'size': 70}
     plt.rc('font', **font)
     paras = {'lines.linewidth': 70, 'legend.fontsize': 70, 'axes.labelsize': 80, 'legend.frameon': True,
@@ -102,9 +116,9 @@ def draw(dic):
     #meanpointprops = dict(marker='D', markeredgecolor='black',markerfacecolor='firebrick',markersize=20)
 
     fig = plt.figure(figsize=(100, 80))
-    outer = gridspec.GridSpec(1, 2, wspace=0.1, hspace=0.2)
+    outer = gridspec.GridSpec(1, len(dic.keys()), wspace=0.1, hspace=0.2)
     for i,a in enumerate(dic.keys()):
-        inner = gridspec.GridSpecFromSubplotSpec(4, 1, subplot_spec=outer[i], wspace=0.05, hspace=0.0)
+        inner = gridspec.GridSpecFromSubplotSpec(len(dic[a].keys()), 1, subplot_spec=outer[i], wspace=0.05, hspace=0.0)
         for j,b in enumerate(dic[a].keys()):
             ax = plt.Subplot(fig, inner[j])
             if j==0:
@@ -113,12 +127,12 @@ def draw(dic):
 
             bplot=ax.boxplot(temp,showmeans=False,showfliers=False,medianprops=medianprops,capprops=whiskerprops,
                        flierprops=whiskerprops,boxprops=boxprops,whiskerprops=whiskerprops,
-                       positions=[1,2,3, 5,6,7, 9,10,11, 13,14,15, 17,18,19, 21,22,23, 25,26,27, 29,30,31, 33,34,35, 37,38,39,
-                                  41,42,43, 45,46,47])
+                       positions=[1,2,3, 6,7,8, 11,12,13, 16,17,18, 21,22,23, 26,27,28, 31,32,33, 36,37,38,
+                                  41,42,43, 46,47,48, 51,52,53, 56,57,58])
             for patch, color in zip(bplot['boxes'], colors):
                 patch.set(color=color)
-            ax.set_xticks([2,6,10,14,18,22,26,30,34,38,42,46])
-            ax.set_xticklabels(dic[a][b].keys(),rotation=45)
+            ax.set_xticks([2,7,12,17,22,27,32,37,42,47,52,57])
+            ax.set_xticklabels(dic[a][b].keys(),rotation=90)
             ax.set_ylabel(b,labelpad=30)
             #ax.set_ylim([0,1])
             if j!=3:
@@ -151,6 +165,70 @@ def draw(dic):
     plt.savefig("../results/new/graph.png", bbox_inches='tight')
     plt.close(fig)
 
+
+def draw_reg(dic):
+    font = {'size': 50}
+    plt.rc('font', **font)
+    paras = {'lines.linewidth': 50, 'legend.fontsize': 50, 'axes.labelsize': 50, 'legend.frameon': True,
+                  'figure.autolayout': True,'axes.linewidth':8}
+    plt.rcParams.update(paras)
+
+    boxprops = dict(linewidth=9,color='black')
+    colors=['cyan', 'blue', 'green']*12
+    whiskerprops = dict(linewidth=5)
+    medianprops = dict(linewidth=8, color='firebrick')
+    #meanpointprops = dict(marker='D', markeredgecolor='black',markerfacecolor='firebrick',markersize=20)
+
+    fig = plt.figure(figsize=(50, 40))
+    outer = gridspec.GridSpec(1, len(dic.keys()), wspace=0.1, hspace=0.2)
+    for i,a in enumerate(dic.keys()):
+        inner = gridspec.GridSpecFromSubplotSpec(len(dic[a].keys()), 1, subplot_spec=outer[i], wspace=0.05, hspace=0.0)
+        for j,b in enumerate(dic[a].keys()):
+            ax = plt.Subplot(fig, inner[j])
+            if j==0:
+                ax.set_title(a)
+            temp=[item[1:] for sublist in dic[a][b].values() for item in sublist]
+
+            bplot=ax.boxplot(temp,showmeans=False,showfliers=False,medianprops=medianprops,capprops=whiskerprops,
+                       flierprops=whiskerprops,boxprops=boxprops,whiskerprops=whiskerprops,
+                       positions=[1,2,3, 6,7,8, 11,12,13, 16,17,18, 21,22,23, 26,27,28, 31,32,33, 36,37,38,
+                                  41,42,43, 46,47,48, 51,52,53, 56,57,58])
+            for patch, color in zip(bplot['boxes'], colors):
+                patch.set(color=color)
+            ax.set_xticks([2,7,12,17,22,27,32,37,42,47,52,57])
+            ax.set_xticklabels(dic[a][b].keys(),rotation=90)
+            ax.set_ylabel(b,labelpad=30)
+            #ax.set_ylim([0,1])
+            if j!=0:
+                plt.setp(ax.get_xticklabels(), visible=False)
+            fig.add_subplot(ax)
+
+    # box1 = TextArea("DT", textprops=dict(color=colors[0],size='large'))
+    # box2 = TextArea("RF", textprops=dict(color=colors[1],size='large'))
+    # box3 = TextArea("SVM", textprops=dict(color=colors[2],size='large'))
+    # box = HPacker(children=[box1, box2, box3],
+    #               align="center",
+    #               pad=0, sep=5)
+    #
+    # anchored_box = AnchoredOffsetbox(loc=3,child=box, pad=0.,frameon=True,
+    #                                  bbox_to_anchor=(0., 1.02),borderpad=0.)
+    #
+    # plt.artist(anchored_box)
+    obj_0 = AnyObject("DT", colors[0])
+    obj_1 = AnyObject("RF", colors[1])
+    obj_2 = AnyObject("SVM", colors[2])
+
+    plt.legend([obj_0, obj_1,obj_2], ['Decision Tree', 'Random Forest', 'Support Vector Machine'],
+               handler_map={obj_0: AnyObjectHandler(), obj_1: AnyObjectHandler(),obj_2: AnyObjectHandler()},
+               loc='upper center', bbox_to_anchor=(-0.1, 1.10),
+               fancybox=True, shadow=True, ncol=3)
+    # plt.figtext(0.40, 0.9, 'DT', color=colors[0],size='large')
+    # plt.figtext(0.50, 0.9, 'RF', color=colors[1],size='large')
+    # plt.figtext(0.60, 0.9, 'SVM', color=colors[2],size='large')
+
+    plt.savefig("../results/new/graph_reg.png", bbox_inches='tight')
+    plt.close(fig)
+
 def writecsvs_reg(file,file_names,untuned):
     with open("../csv/"+file+untuned+".csv", "wb") as f:
         writer = csv.writer(f,delimiter=',')
@@ -179,12 +257,14 @@ def for_untuned():
     dic={}
     for f in files_class:
         files_names = dump_files(f, 'untuned')
-        dic[f]=values(f, files_names,'untuned')
-    draw(dic)
+        dic[f]=values_class(f, files_names,'untuned')
+    draw_class(dic)
+
+    dic = {}
     for f in files_reg:
         files_names=dump_files(f,'untuned')
-        writecsvs_reg(f, files_names,'untuned')
+        dic[f] = values_reg(f, files_names, 'untuned')
+    draw_reg(dic)
 
 if __name__ == '__main__':
     for_untuned()
-
