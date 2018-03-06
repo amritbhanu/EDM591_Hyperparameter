@@ -48,7 +48,7 @@ def dump_files(i='',untuned=''):
     file_names=[]
     for _, _, files in os.walk(ROOT + "/../dump/new/"):
         for file in files:
-            if file.endswith(untuned+".pickle") and file.startswith(i):
+            if file.endswith(untuned+".pickle") and i in file:
                 file_names.append(file)
     return file_names
 
@@ -59,10 +59,31 @@ def values_class(file,file_names,untuned):
         for f in file_names:
             with open("../dump/new/"+f, 'rb') as handle:
                 a = pickle.load(handle)
-            #print(a)
             res=f.split(file)[1]
             res=res.split(untuned)[0]
             dic[m][preprocess_names[res]]={}
+            for l,values in a.iteritems():
+                if l!='run_svmclas' and l!='cols':
+                    features=[round(np.median(x),5) for x in zip(*values['features'])]
+                    columns=a['cols']
+                    temp={x:features[i] for i,x in enumerate (columns)}
+                    dic[m][preprocess_names[res]][learners_class[l]]=temp
+    return dic
+
+def values_class_tune(file,file_names,untuned):
+    dic={}
+    dic1 = {}
+    for m in metrics:
+        dic1[m] = list(filter(lambda x: m in x, file_names))
+    for m in metrics:
+        dic[m] = {}
+        for f in dic1[m]:
+            with open("../dump/new/"+f, 'rb') as handle:
+                a = pickle.load(handle)
+            res=f.split(m+file)[1]
+            res=res.split(untuned)[0]
+            if preprocess_names[res] not in dic[m]:
+                dic[m][preprocess_names[res]]=[]
             for l,values in a.iteritems():
                 if l!='run_svmclas' and l!='cols':
                     features=[round(np.median(x),5) for x in zip(*values['features'])]
@@ -82,16 +103,22 @@ def values_reg(file, file_names, untuned):
                 res = res.split(untuned)[0]
                 dic[m][preprocess_names[res]] = {}
                 for l, values in a.iteritems():
-                    if l != 'run_svmclas' and l != 'cols':
+                    if l != 'run_svmclas' and l != 'cols' and untuned=='untuned':
                         features = [round(np.median(x),5) for x in zip(*values['features'])]
                         columns = a['cols']
                         temp = {x: features[i] for i, x in enumerate(columns)}
 
                         dic[m][preprocess_names[res]][learners_class[l]] = temp
+                    elif l != 'run_svmreg' and l != 'cols' and untuned=='early':
+                        features = [round(np.median(x),5) for x in zip(*values['features'])]
+                        columns = a['cols']
+                        temp = {x: features[i] for i, x in enumerate(columns)}
+
+                        dic[m][preprocess_names[res]][learners_reg[l]] = temp
         return dic
 
 
-def draw_class(dic):
+def draw_class(dic,tuned=''):
     font = {'size': 70}
     plt.rc('font', **font)
     paras = {'lines.linewidth': 70, 'legend.fontsize': 70, 'axes.labelsize': 80, 'legend.frameon': True,
@@ -116,7 +143,7 @@ def draw_class(dic):
                 plt.suptitle('Top 10 Features for '+a+" for "+b+" for "+k)
                 plt.tight_layout()
                 plt.subplots_adjust(top=0.95)
-                plt.savefig("../results/new/features_"+a+"_"+b+"_"+k+".png",bbox_inches='tight')
+                plt.savefig("../results/new/features_"+a+"_"+b+"_"+k+tuned+".png",bbox_inches='tight')
                 plt.close(fig)
 
 def for_untuned():
@@ -124,13 +151,27 @@ def for_untuned():
     for f in files_class:
         files_names = dump_files(f, 'untuned')
         dic[f]=values_class(f, files_names,'untuned')
-    draw_class(dic)
+    draw_class(dic,'')
 
     dic = {}
     for f in files_reg:
         files_names=dump_files(f,'untuned')
         dic[f] = values_reg(f, files_names, 'untuned')
-    draw_class(dic)
+    draw_class(dic,'')
+
+def for_tuned():
+    dic={}
+    for f in files_class:
+        files_names = dump_files(f, 'early')
+        dic[f]=values_class(f, files_names,'early')
+    draw_class(dic,'tuned')
+
+    dic = {}
+    for f in files_reg:
+        files_names=dump_files(f,'early')
+        dic[f] = values_reg(f, files_names, 'early')
+    draw_class(dic,'tuned')
 
 if __name__ == '__main__':
-    for_untuned()
+    #for_untuned()
+    for_tuned()

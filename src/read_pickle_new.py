@@ -44,7 +44,7 @@ def dump_files(i='',untuned=''):
     file_names=[]
     for _, _, files in os.walk(ROOT + "/../dump/new/"):
         for file in files:
-            if file.endswith(untuned+".pickle") and file.startswith(i):
+            if file.endswith(untuned+".pickle") and i in file:
                 file_names.append(file)
     return file_names
 
@@ -72,6 +72,25 @@ def writecsvs_class(file,file_names,untuned):
             writer.writerow(cols)
             writer.writerows(l1)
 
+def values_class_tune(file,file_names,untuned):
+    dic={}
+    dic1={}
+    for m in metrics:
+        dic1[m]=list(filter(lambda x: m in x, file_names))
+    for m in metrics:
+        dic[m]={}
+        for f in dic1[m]:
+            with open("../dump/new/"+f, 'rb') as handle:
+                a = pickle.load(handle)
+            res=f.split(m+file)[1]
+            res=res.split(untuned)[0]
+            if preprocess_names[res] not in dic[m]:
+                dic[m][preprocess_names[res]]=[]
+            for l,values in a.iteritems():
+                if l!='cols':
+                    dic[m][preprocess_names[res]].append([learners_class[l]]+values[m])
+    return dic
+
 def values_class(file,file_names,untuned):
     dic={}
     for m in metrics:
@@ -98,11 +117,13 @@ def values_reg(file, file_names, untuned):
                 res = res.split(untuned)[0]
                 dic[m][preprocess_names[res]] = []
                 for l, values in a.iteritems():
-                    if l != 'cols':
+                    if l != 'cols' and untuned=='untuned':
                         dic[m][preprocess_names[res]].append([learners_class[l]] + values[m])
+                    elif l != 'cols' and untuned=='early':
+                        dic[m][preprocess_names[res]].append([learners_reg[l]] + values[m])
         return dic
 
-def draw_class(dic):
+def draw_class(dic,tuned=''):
     font = {'size': 70}
     plt.rc('font', **font)
     paras = {'lines.linewidth': 70, 'legend.fontsize': 70, 'axes.labelsize': 80, 'legend.frameon': True,
@@ -116,7 +137,7 @@ def draw_class(dic):
     #meanpointprops = dict(marker='D', markeredgecolor='black',markerfacecolor='firebrick',markersize=20)
 
     fig = plt.figure(figsize=(100, 80))
-    outer = gridspec.GridSpec(1, len(dic.keys()), wspace=0.1, hspace=0.2)
+    outer = gridspec.GridSpec(1, len(dic.keys()), wspace=0.15, hspace=0.2)
     for i,a in enumerate(dic.keys()):
         inner = gridspec.GridSpecFromSubplotSpec(len(dic[a].keys()), 1, subplot_spec=outer[i], wspace=0.05, hspace=0.0)
         for j,b in enumerate(dic[a].keys()):
@@ -162,11 +183,11 @@ def draw_class(dic):
     # plt.figtext(0.50, 0.9, 'RF', color=colors[1],size='large')
     # plt.figtext(0.60, 0.9, 'SVM', color=colors[2],size='large')
 
-    plt.savefig("../results/new/graph.png", bbox_inches='tight')
+    plt.savefig("../results/new/graph"+tuned+".png", bbox_inches='tight')
     plt.close(fig)
 
 
-def draw_reg(dic):
+def draw_reg(dic,tuned=''):
     font = {'size': 50}
     plt.rc('font', **font)
     paras = {'lines.linewidth': 50, 'legend.fontsize': 50, 'axes.labelsize': 50, 'legend.frameon': True,
@@ -226,7 +247,7 @@ def draw_reg(dic):
     # plt.figtext(0.50, 0.9, 'RF', color=colors[1],size='large')
     # plt.figtext(0.60, 0.9, 'SVM', color=colors[2],size='large')
 
-    plt.savefig("../results/new/graph_reg.png", bbox_inches='tight')
+    plt.savefig("../results/new/graph_reg"+tuned+".png", bbox_inches='tight')
     plt.close(fig)
 
 def writecsvs_reg(file,file_names,untuned):
@@ -258,13 +279,27 @@ def for_untuned():
     for f in files_class:
         files_names = dump_files(f, 'untuned')
         dic[f]=values_class(f, files_names,'untuned')
-    draw_class(dic)
+    draw_class(dic,'')
 
     dic = {}
     for f in files_reg:
         files_names=dump_files(f,'untuned')
         dic[f] = values_reg(f, files_names, 'untuned')
-    draw_reg(dic)
+    draw_reg(dic,'')
+
+def for_tuned():
+    dic={}
+    for f in files_class:
+        files_names = dump_files(f, 'early')
+        dic[f]=values_class_tune(f, files_names,'early')
+    draw_class(dic,'tuned')
+
+    dic = {}
+    for f in files_reg:
+        files_names=dump_files(f,'early')
+        dic[f] = values_reg(f, files_names, 'early')
+    draw_reg(dic,'tuned')
 
 if __name__ == '__main__':
     for_untuned()
+    for_tuned()
