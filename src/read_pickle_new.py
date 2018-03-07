@@ -274,32 +274,85 @@ def writecsvs_reg(file,file_names,untuned):
             writer.writerow(cols)
             writer.writerows(l1)
 
+def draw_class_comparison(untuned,tuned):
+        font = {'size': 50}
+        plt.rc('font', **font)
+        paras = {'lines.linewidth': 50, 'legend.fontsize': 50, 'axes.labelsize': 50, 'legend.frameon': True,
+                  'axes.linewidth': 8}
+        plt.rcParams.update(paras)
+
+        boxprops = dict(linewidth=9, color='black')
+        colors = ['cyan', 'cyan','blue','blue', 'green','green']
+        whiskerprops = dict(linewidth=5)
+        medianprops = dict(linewidth=8, color='firebrick')
+
+        for a in untuned:
+            for b in preprocess_names.values():
+                fig, axes = plt.subplots(2, 2, figsize=(50, 40))
+                l1 = [(x, y) for x in range(2) for y in range(2)]
+                for k, c in zip(l1, metrics):
+                    temp=untuned[a][c][b]
+                    temp1=tuned[a][c][b]
+                    data=[]
+                    for i,j in enumerate(temp):
+                        data.append(temp[i][1:])
+                        data.append(temp1[i][1:])
+
+                    bplot = axes[k[0],k[1]].boxplot(data, showmeans=False, showfliers=False, medianprops=medianprops,
+                                   capprops=whiskerprops,
+                                   flierprops=whiskerprops, boxprops=boxprops, whiskerprops=whiskerprops,
+                                   positions=[1, 2, 5,6, 9,10])
+                    for patch, color in zip(bplot['boxes'], colors):
+                        patch.set(color=color)
+                    axes[k[0], k[1]].set_xticks([1,2,5,6,9,10])
+                    axes[k[0], k[1]].set_xticklabels(['untuned','tuned']*3, rotation=90)
+                    axes[k[0], k[1]].set_ylabel(c, labelpad=30)
+                    # ax.set_ylim([0,1])
+                    if k[0] != 1:
+                        plt.setp(axes[k[0], k[1]].get_xticklabels(), visible=False)
+                obj_0 = AnyObject("DT", colors[0])
+                obj_1 = AnyObject("RF", colors[2])
+                obj_2 = AnyObject("SVM", colors[4])
+                plt.suptitle(a+" - "+b)
+                plt.tight_layout()
+                plt.subplots_adjust(top=0.9)
+                plt.legend([obj_0, obj_1, obj_2], ['Decision Tree', 'Random Forest', 'Support Vector Machine'],
+                           handler_map={obj_0: AnyObjectHandler(), obj_1: AnyObjectHandler(), obj_2: AnyObjectHandler()},
+                           loc='upper center', bbox_to_anchor=(-0.1, 2.20),
+                           fancybox=True, shadow=True, ncol=3)
+                plt.savefig("../results/new/performance" + a + b+".png", bbox_inches='tight')
+                plt.close(fig)
+
 def for_untuned():
-    dic={}
+    dic1={}
     for f in files_class:
         files_names = dump_files(f, 'untuned')
-        dic[f]=values_class(f, files_names,'untuned')
-    draw_class(dic,'')
+        dic1[f]=values_class(f, files_names,'untuned')
+    #draw_class(dic1,'')
 
     dic = {}
     for f in files_reg:
         files_names=dump_files(f,'untuned')
         dic[f] = values_reg(f, files_names, 'untuned')
-    draw_reg(dic,'')
+    #draw_reg(dic,'')
+    return dic1,dic
 
 def for_tuned():
-    dic={}
+    dic1={}
     for f in files_class:
         files_names = dump_files(f, 'early')
-        dic[f]=values_class_tune(f, files_names,'early')
-    draw_class(dic,'tuned')
+        dic1[f]=values_class_tune(f, files_names,'early')
+    #draw_class(dic1,'tuned')
 
     dic = {}
     for f in files_reg:
         files_names=dump_files(f,'early')
         dic[f] = values_reg(f, files_names, 'early')
-    draw_reg(dic,'tuned')
+    #draw_reg(dic,'tuned')
+    return dic1,dic
 
 if __name__ == '__main__':
-    for_untuned()
-    for_tuned()
+    clas_un,reg_un=for_untuned()
+    clas_tu,reg_tu =for_tuned()
+
+    draw_class_comparison(clas_un,clas_tu)
