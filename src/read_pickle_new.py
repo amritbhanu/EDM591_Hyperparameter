@@ -307,7 +307,7 @@ def draw_class_comparison(untuned,tuned):
                     axes[k[0], k[1]].set_xticks([1,2,5,6,9,10])
                     axes[k[0], k[1]].set_xticklabels(['untuned','tuned']*3, rotation=90)
                     axes[k[0], k[1]].set_ylabel(c, labelpad=30)
-                    # ax.set_ylim([0,1])
+                    axes[k[0], k[1]].set_ylim([0,1])
                     if k[0] != 1:
                         plt.setp(axes[k[0], k[1]].get_xticklabels(), visible=False)
                 obj_0 = AnyObject("DT", colors[0])
@@ -322,6 +322,54 @@ def draw_class_comparison(untuned,tuned):
                            fancybox=True, shadow=True, ncol=3)
                 plt.savefig("../results/new/performance" + a + b+".png", bbox_inches='tight')
                 plt.close(fig)
+
+
+def draw_reg_comparison(untuned, tuned):
+    font = {'size': 50}
+    plt.rc('font', **font)
+    paras = {'lines.linewidth': 50, 'legend.fontsize': 50, 'axes.labelsize': 50, 'legend.frameon': True,
+             'axes.linewidth': 8}
+    plt.rcParams.update(paras)
+
+    boxprops = dict(linewidth=9, color='black')
+    colors = ['cyan', 'cyan', 'blue', 'blue', 'green', 'green']
+    whiskerprops = dict(linewidth=5)
+    medianprops = dict(linewidth=8, color='firebrick')
+
+    for a in untuned:
+        for b in preprocess_names.values():
+            fig, axes = plt.subplots(1, 1, figsize=(50, 40))
+            l1 = [(0, 0)]
+            for k, c in zip(l1, ['MSE']):
+                temp = untuned[a][c][b]
+                temp1 = tuned[a][c][b]
+                data = []
+                for i, j in enumerate(temp):
+                    data.append(temp[i][1:])
+                    data.append(temp1[i][1:])
+
+                bplot = axes.boxplot(data, showmeans=False, showfliers=False, medianprops=medianprops,
+                                                 capprops=whiskerprops,
+                                                 flierprops=whiskerprops, boxprops=boxprops, whiskerprops=whiskerprops,
+                                                 positions=[1, 2, 5, 6, 9, 10])
+                for patch, color in zip(bplot['boxes'], colors):
+                    patch.set(color=color)
+                axes.set_xticks([1, 2, 5, 6, 9, 10])
+                axes.set_xticklabels(['untuned', 'tuned'] * 3, rotation=90)
+                axes.set_ylabel(c, labelpad=30)
+
+            obj_0 = AnyObject("DT", colors[0])
+            obj_1 = AnyObject("RF", colors[2])
+            obj_2 = AnyObject("SVM", colors[4])
+            plt.suptitle(a + " - " + b)
+            plt.tight_layout()
+            plt.subplots_adjust(top=0.92)
+            plt.legend([obj_0, obj_1, obj_2], ['Decision Tree', 'Random Forest', 'Support Vector Machine'],
+                       handler_map={obj_0: AnyObjectHandler(), obj_1: AnyObjectHandler(), obj_2: AnyObjectHandler()},
+                       loc='upper center', bbox_to_anchor=(0.5, 1.05),
+                       fancybox=True, shadow=True, ncol=3)
+            plt.savefig("../results/new/performance" + a + b + ".png", bbox_inches='tight')
+            plt.close(fig)
 
 def for_untuned():
     dic1={}
@@ -356,3 +404,4 @@ if __name__ == '__main__':
     clas_tu,reg_tu =for_tuned()
 
     draw_class_comparison(clas_un,clas_tu)
+    draw_reg_comparison(reg_un,reg_tu)
