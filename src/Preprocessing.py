@@ -134,12 +134,13 @@ def main(filename, drop_columns=[], label='', missing_methods='0', norm_methods=
 if __name__ == '__main__':
     # main(filename = 'dataset2', label = 'processLetterGrade', missing_methods = 'median', norm_methods = 'mean')
     d = {'dataset1_math': 'G3', 'dataset1_portuguese': 'G3', 'dataset2': 'processLetterGrade', 'dataset3': 'Class'}
+    d1 = {'dataset1_math': ['G2','G1'], 'dataset1_portuguese': ['G2','G1'], 'dataset2': ['teamNumber'], 'dataset3': []}
     miss1 = ['0', 'median','mean']
     norm2 = ['min-max', 'mean']
     for k,v in d.items():
         for m in miss1:
             for n in norm2:
-                main(filename=k, label=v, missing_methods=m, norm_methods=n)
+                main(filename=k, label=v, missing_methods=m, norm_methods=n, drop_columns=d1[k])
     # print(k,v,m,n)
     '''
     df = pd.read_csv('../data/raw/dataset2.csv')
