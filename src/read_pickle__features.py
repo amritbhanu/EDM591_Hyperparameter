@@ -8,10 +8,8 @@ sys.dont_write_bytecode = True
 import pickle
 import numpy as np
 import os
-import csv
 from collections import OrderedDict
 import matplotlib.pyplot as plt
-import matplotlib.gridspec as gridspec
 import matplotlib.text as mpl_text
 
 class AnyObject(object):
@@ -173,5 +171,5 @@ def for_tuned():
     draw_class(dic,'tuned')
 
 if __name__ == '__main__':
-    #for_untuned()
+    for_untuned()
     for_tuned()
